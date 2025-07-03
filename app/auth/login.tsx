@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Mail, Lock, Eye, EyeOff, LogIn, Crown, X } from 'lucide-react-native';
+import { Mail, Lock, Eye, EyeOff, LogIn, Crown } from 'lucide-react-native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { router } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
@@ -12,7 +12,6 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [showDemoNotification, setShowDemoNotification] = useState(true);
   const { login } = useAuth();
 
   const handleLogin = async () => {
@@ -49,32 +48,6 @@ export default function LoginScreen() {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.keyboardView}
         >
-          {/* Demo Notification Banner */}
-          {showDemoNotification && (
-            <Animated.View entering={FadeInDown.delay(100)} style={styles.demoNotificationBanner}>
-              <LinearGradient
-                colors={['#F59E0B', '#EF4444']}
-                style={styles.demoNotificationGradient}
-              >
-                <View style={styles.demoNotificationContent}>
-                  <Crown color="white" size={20} />
-                  <View style={styles.demoNotificationText}>
-                    <Text style={styles.demoNotificationTitle}>🎯 Demo Mode Active</Text>
-                    <Text style={styles.demoNotificationSubtitle}>
-                      Admin Email: rg3rd07@gmail.com • Any password works
-                    </Text>
-                  </View>
-                  <TouchableOpacity 
-                    style={styles.demoNotificationClose}
-                    onPress={() => setShowDemoNotification(false)}
-                  >
-                    <X color="white" size={18} />
-                  </TouchableOpacity>
-                </View>
-              </LinearGradient>
-            </Animated.View>
-          )}
-
           {/* Header */}
           <Animated.View entering={FadeInDown.delay(200)} style={styles.header}>
             <View style={styles.logoContainer}>
@@ -167,17 +140,6 @@ export default function LoginScreen() {
               <Text style={styles.registerButtonText}>Create New Account</Text>
             </TouchableOpacity>
           </Animated.View>
-
-          {/* Demo Info */}
-          <Animated.View entering={FadeInUp.delay(800)} style={styles.demoInfo}>
-            <Text style={styles.demoTitle}>Demo Features</Text>
-            <Text style={styles.demoText}>
-              • Admin can create skill tracks and job posts{'\n'}
-              • Voice-activated learning with AI tutor{'\n'}
-              • Blockchain certificates and NFT minting{'\n'}
-              • Job board with skill matching
-            </Text>
-          </Animated.View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </LinearGradient>
@@ -194,48 +156,6 @@ const styles = StyleSheet.create({
   keyboardView: {
     flex: 1,
     paddingHorizontal: 24,
-  },
-  demoNotificationBanner: {
-    marginTop: 10,
-    marginBottom: 10,
-    borderRadius: 16,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 8,
-  },
-  demoNotificationGradient: {
-    padding: 16,
-  },
-  demoNotificationContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  demoNotificationText: {
-    flex: 1,
-    marginLeft: 12,
-  },
-  demoNotificationTitle: {
-    fontSize: 14,
-    fontFamily: 'Inter-Bold',
-    color: 'white',
-    marginBottom: 2,
-  },
-  demoNotificationSubtitle: {
-    fontSize: 12,
-    fontFamily: 'Inter-Medium',
-    color: 'rgba(255, 255, 255, 0.9)',
-  },
-  demoNotificationClose: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: 12,
   },
   header: {
     alignItems: 'center',
@@ -389,24 +309,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Inter-SemiBold',
     color: 'white',
-  },
-  demoInfo: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 12,
-    padding: 16,
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  demoTitle: {
-    fontSize: 14,
-    fontFamily: 'Inter-SemiBold',
-    color: 'white',
-    marginBottom: 8,
-  },
-  demoText: {
-    fontSize: 12,
-    fontFamily: 'Inter-Regular',
-    color: 'rgba(255, 255, 255, 0.8)',
-    lineHeight: 18,
   },
 });
